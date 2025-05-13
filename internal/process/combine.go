@@ -18,7 +18,7 @@ func Combine(x, y *image.Gray) *image.Gray {
         for xCoord := bounds.Min.X; xCoord < bounds.Max.X; xCoord++ {
             xPixel := x.GrayAt(xCoord, yCoord).Y
             yPixel := y.GrayAt(xCoord, yCoord).Y
-
+            
             // 合併方式：X7X6X5X4Y4Y5Y6Y7
             zPixel := (xPixel & 0xF0) | (yPixel >> 4)
             z.SetGray(xCoord, yCoord, color.Gray{Y: zPixel})

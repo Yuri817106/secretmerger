@@ -67,7 +67,7 @@ func main() {
 	// process.SetReferenceImage(imgZ)
 	// fmt.Printf("PSNR between Z and double-reversed Z: %.2f dB\n", process.PSNR(doubleReversedZ))
 
-	// 保存 Z 和反轉後的 Z
+	// 保存 Z 、反轉後的 Z 和兩次反轉的 Z
 	if err := imageio.WriteGrayBMP(outputZ, headerX, imgZ.Pix); err != nil {
 		panic(err)
 	}
@@ -80,4 +80,6 @@ func main() {
 
 	fmt.Println("Saved combined image to", outputZ)
 	fmt.Println("Saved reversed image to", outputReversed)
+	fmt.Println("Saved double-reversed image to", outputDoubleReversed)
+	fmt.Println("All images saved successfully.")
 }
