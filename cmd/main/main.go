@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	inputY := "testdata/Lena_gray.bmp"
+	inputY := "testdata/peppers_gray.bmp"
 	inputX := "testdata/baboon_gray.bmp"
 	outputZ := "output/Z_combined.bmp"
 	outputReversed := "output/Z_reversed.bmp"
@@ -77,6 +77,27 @@ func main() {
 	if err := imageio.WriteGrayBMP(outputDoubleReversed, headerX, doubleReversedZ.Pix); err != nil {
 		panic(err)
 	}
+
+	// outputX := "output/outputX.bmp"
+	// outputY := "output/outputY.bmp"
+	outputXReversed := "output/outputXReversed.bmp"
+	// outputYReversed := "output/outputYReversed.bmp"
+	// if err := imageio.WriteGrayBMP(outputX, headerX, imgX.Pix); err != nil {
+	// 	panic(err)
+	// }
+	// if err := imageio.WriteGrayBMP(outputY, headerX, imgY.Pix); err != nil {
+	// 	panic(err)
+	// }
+	fmt.Println("Before: ", imgX.Pix[:16])
+	reversedX := process.ReverseImageBits(imgX)
+	if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix); err != nil {
+		panic(err)
+	}
+	fmt.Println("After: ", reversedX.Pix[:16])
+	// reversedY := process.ReverseImageBits(imgY)
+	// if err := imageio.WriteGrayBMP(outputYReversed, headerX, reversedY.Pix); err != nil {
+	// 	panic(err)
+	// }
 
 	fmt.Println("Saved combined image to", outputZ)
 	fmt.Println("Saved reversed image to", outputReversed)

@@ -11,8 +11,19 @@ func ReverseByte(b byte) byte {
 	for i := 0; i < 8; i++ {
 		r <<= 1 // r 左移
 		r |= b & 1 // 取 b 最右邊的 bit (b & 1) 放到 r 最右邊的 bit (r |= ...) 
-		b >>= 1 // b 又移
+		b >>= 1 // b 右移
 	}
+	return r
+}
+// ReverseBits 反轉一個 byte 的 bit 順序，並保存成 B4B5B6B7 0000
+func ReverseBits(b byte) byte {
+	var r byte = 0
+	for i:= 0; i < 8; i++ {
+		r <<= 1
+		r |= b & 1
+		b >>= 1
+	}
+	r <<= 4
 	return r
 }
 
