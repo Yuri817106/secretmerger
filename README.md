@@ -32,7 +32,7 @@
     > 安裝 [homebrew](https://brew.sh/)
 2. 下載和執行本專案：
    ```bash
-   git clone <本專案網址>
+   git clone https://github.com/Yuri817106/secretmerger.git
    cd secretmerger
 
    go run ./cmd/main/main.go
