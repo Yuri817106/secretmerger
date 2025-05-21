@@ -4,7 +4,7 @@
 
 ## 安裝與執行
 
-1. 安裝 Go
+1. 安裝 Go<br>
     如果你的系統為`Debian/Ubuntu`
     ```bash
     sudo apt install golang
