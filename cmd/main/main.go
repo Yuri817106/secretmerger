@@ -49,23 +49,11 @@ func main() {
 	// 合併 X 和 Y 成 Z
 	imgZ := process.Combine(imgX, imgY)
 
-	// 設定參考影像為 X，計算 X 和 Z 的 PSNR
-	// process.SetReferenceImage(imgX)
-	// fmt.Printf("PSNR between X and Z: %.2f dB\n", process.PSNR(imgZ))
-
 	// 對 Z 進行一次反轉
 	reversedZ := process.ReverseImageBits(imgZ)
 
-	// 設定參考影像為 Y，計算 Y 和反轉後 Z 的 PSNR
-	// process.SetReferenceImage(imgY)
-	// fmt.Printf("PSNR between Y and reversed Z: %.2f dB\n", process.PSNR(reversedZ))
-
 	// 再次反轉 Z
 	doubleReversedZ := process.ReverseImageBits(reversedZ)
-
-	// 設定參考影像為 Z，計算 Z 和雙重反轉後 Z 的 PSNR
-	// process.SetReferenceImage(imgZ)
-	// fmt.Printf("PSNR between Z and double-reversed Z: %.2f dB\n", process.PSNR(doubleReversedZ))
 
 	// 保存 Z 、反轉後的 Z 和兩次反轉的 Z
 	if err := imageio.WriteGrayBMP(outputZ, headerX, imgZ.Pix, widthX, heightX); err != nil {
@@ -82,4 +70,13 @@ func main() {
 	fmt.Println("Saved reversed image to", outputReversed)
 	fmt.Println("Saved double-reversed image to", outputDoubleReversed)
 	fmt.Println("All images saved successfully.")
+
+	process.SetReferenceImage(imgX)
+	fmt.Println("PSNR (ReferenceImage X): ")
+	fmt.Printf("Z : %.3f dB\n", process.PSNR(imgZ))
+
+	process.SetReferenceImage(imgY)
+	fmt.Println("PSNR (ReferenceImage Y): ")
+	fmt.Printf("Reversed Z : %.3f dB\n", process.PSNR(reversedZ))
+	fmt.Printf("Double Reversed Z : %.3f dB\n", process.PSNR(doubleReversedZ))
 }
