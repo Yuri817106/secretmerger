@@ -291,7 +291,7 @@ func main() {
 ## 主程式邏輯(續) `cmd/main/main.go`
 ```go
 func main() {
-	// 合併 X 和 Y 成 Z
+// 合併 X 和 Y 成 Z
 	imgZ := process.Combine(imgX, imgY)
 
 	// 對 Z 進行一次反轉
@@ -301,20 +301,15 @@ func main() {
 	doubleReversedZ := process.ReverseImageBits(reversedZ)
 
 	// 保存 Z 、反轉後的 Z 和兩次反轉的 Z
-	if err := imageio.WriteGrayBMP(outputZ, headerX, imgZ.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputZ, headerX, imgZ.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
-	if err := imageio.WriteGrayBMP(outputReversed, headerX, reversedZ.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputReversed, headerX, reversedZ.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
-	if err := imageio.WriteGrayBMP(outputDoubleReversed, headerX, doubleReversedZ.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputDoubleReversed, headerX, doubleReversedZ.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
-
-	fmt.Println("Saved combined image to", outputZ)
-	fmt.Println("Saved reversed image to", outputReversed)
-	fmt.Println("Saved double-reversed image to", outputDoubleReversed)
-	fmt.Println("All images saved successfully.")
 }
 ```
 
