@@ -46,20 +46,27 @@ func main() {
 		Stride: widthY,
 		Rect:   image.Rect(0, 0, widthY, heightY),
 	}
-	
+
 	if err := imageio.WriteGrayBMP(outputX, headerX, imgX.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
 	if err := imageio.WriteGrayBMP(outputY, headerX, imgY.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
+
 	reversedX := process.ReverseImageBits(imgX)
 	if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
-	fmt.Println("After: ", reversedX.Pix[:16])
+
 	reversedY := process.ReverseImageBits(imgY)
 	if err := imageio.WriteGrayBMP(outputYReversed, headerX, reversedY.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
+
+	fmt.Println("Saved image to", outputX)
+	fmt.Println("Saved image to", outputXReversed)
+	fmt.Println("Saved image to", outputY)
+	fmt.Println("Saved image to", outputYReversed)
+	fmt.Println("All images saved successfully.")
 }
