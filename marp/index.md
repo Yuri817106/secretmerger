@@ -163,6 +163,34 @@ func Combine(x, y *image.Gray) *image.Gray {
 
 ---
 ## 計算 PSNR `internal/process/psnr.go`
+```go
+// PSNR 計算輸入影像與參考影像的 PSNR 值
+func PSNR(img *image.Gray) float64 {
+	if referenceImage == nil {
+		panic("reference image is not set")
+	}
+	if img.Bounds() != referenceImage.Bounds() {
+		panic("images must have the same dimensions")
+	}
+
+	var mse float64
+	bounds := img.Bounds()
+
+	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+			diff := float64(img.GrayAt(x, y).Y) - float64(referenceImage.GrayAt(x, y).Y)
+			mse += diff * diff
+		}
+	}
+
+	mse /= float64(bounds.Dx() * bounds.Dy())
+	if mse == 0 {
+		return math.Inf(1) // 無限大，表示完全相同
+	}
+
+	return 10 * math.Log10(255*255/mse)
+}
+```
 
 ---
 ## 讀取圖片 `internal/imageio/bmp.go`
@@ -182,6 +210,37 @@ func ReadGrayBMP(path string) ([]byte, []byte, error) {
 	header := file[:bmpHeaderSize]
 	pixels := file[bmpHeaderSize:]
 	return header, pixels, nil
+}
+```
+---
+## 存儲圖片 `internal/imageio/bmp.go`
+```go
+func WriteGrayBMP(path string, header, pixels []byte, width int, height int) error {
+    // 添加調色板
+    palette := make([]byte, paletteSize)
+    for i := 0; i < 256; i++ {
+        palette[i*4] = byte(i)     // B
+        palette[i*4+1] = byte(i)   // G
+        palette[i*4+2] = byte(i)   // R
+        // i*4+3 保持0
+    }
+    
+    // 計算行填充
+    bytesPerRow := width
+    padding := (4 - (bytesPerRow % 4)) % 4
+    paddedPixels := make([]byte, 0, len(pixels) + (padding * height))
+    
+    // 重新排列像素並添加填充
+    for y := 0; y < height; y++ {
+        start := y * width
+        end := start + width
+        paddedPixels = append(paddedPixels, pixels[start:end]...)
+        paddedPixels = append(paddedPixels, make([]byte, padding)...)
+    }
+    
+    // 組合最終文件
+    fullHeader := append(header[:bmpHeaderSize], palette...)
+    return os.WriteFile(path, append(fullHeader, paddedPixels...), 0644)
 }
 ```
 
@@ -258,3 +317,53 @@ func main() {
 	fmt.Println("All images saved successfully.")
 }
 ```
+
+---
+## 原圖
+<!-- slide -->
+
+<style>
+.flex {
+  display: flex;
+  gap: 140px;
+}
+.flex img {
+  width: 500px;
+}
+</style>
+
+<div class="flex">
+  <div>
+    <img src="image/outputX.bmp" alt="圖1">
+    <small>這是載體圖</small>
+  </div>
+  <div>
+    <img src="image/outputY.bmp" alt="圖2">
+    <small>這是隱藏圖</small>
+  </div>
+</div>
+
+---
+## 合併後
+<!-- slide -->
+
+<style>
+.flex {
+  display: flex;
+  gap: 140px;
+}
+.flex img {
+  width: 500px;
+}
+</style>
+
+<div class="flex">
+  <div>
+    <img src="image/Z_combined.bmp" alt="圖1">
+    <small>反轉前</small>
+  </div>
+  <div>
+    <img src="image/Z_reversed.bmp" alt="圖2">
+    <small>反轉後</small>
+  </div>
+</div>
