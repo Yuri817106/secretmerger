@@ -77,7 +77,6 @@ secretmerger
 │       ├── psnr.go
 │       └── reverse.go
 ├── output
-│   ├── outputXReversed.bmp
 │   ├── Z_combined.bmp
 │   ├── Z_double_reversed.bmp
 │   └── Z_reversed.bmp
