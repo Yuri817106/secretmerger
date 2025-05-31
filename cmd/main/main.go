@@ -68,35 +68,35 @@ func main() {
 	// fmt.Printf("PSNR between Z and double-reversed Z: %.2f dB\n", process.PSNR(doubleReversedZ))
 
 	// 保存 Z 、反轉後的 Z 和兩次反轉的 Z
-	if err := imageio.WriteGrayBMP(outputZ, headerX, imgZ.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputZ, headerX, imgZ.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
-	if err := imageio.WriteGrayBMP(outputReversed, headerX, reversedZ.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputReversed, headerX, reversedZ.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
-	if err := imageio.WriteGrayBMP(outputDoubleReversed, headerX, doubleReversedZ.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputDoubleReversed, headerX, doubleReversedZ.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
 
-	// outputX := "output/outputX.bmp"
-	// outputY := "output/outputY.bmp"
-	// outputXReversed := "output/outputXReversed.bmp"
-	// outputYReversed := "output/outputYReversed.bmp"
-	// if err := imageio.WriteGrayBMP(outputX, headerX, imgX.Pix); err != nil {
-	// 	panic(err)
-	// }
-	// if err := imageio.WriteGrayBMP(outputY, headerX, imgY.Pix); err != nil {
-	// 	panic(err)
-	// }
-	// reversedX := process.ReverseImageBits(imgX)
-	// if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix); err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println("After: ", reversedX.Pix[:16])
-	// reversedY := process.ReverseImageBits(imgY)
-	// if err := imageio.WriteGrayBMP(outputYReversed, headerX, reversedY.Pix); err != nil {
-	// 	panic(err)
-	// }
+	outputX := "output/outputX.bmp"
+	outputY := "output/outputY.bmp"
+	outputXReversed := "output/outputXReversed.bmp"
+	outputYReversed := "output/outputYReversed.bmp"
+	if err := imageio.WriteGrayBMP(outputX, headerX, imgX.Pix, widthX, heightX); err != nil {
+		panic(err)
+	}
+	if err := imageio.WriteGrayBMP(outputY, headerX, imgY.Pix, widthX, heightX); err != nil {
+		panic(err)
+	}
+	reversedX := process.ReverseImageBits(imgX)
+	if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix, widthX, heightX); err != nil {
+		panic(err)
+	}
+	fmt.Println("After: ", reversedX.Pix[:16])
+	reversedY := process.ReverseImageBits(imgY)
+	if err := imageio.WriteGrayBMP(outputYReversed, headerX, reversedY.Pix, widthX, heightX); err != nil {
+		panic(err)
+	}
 
 	fmt.Println("Saved combined image to", outputZ)
 	fmt.Println("Saved reversed image to", outputReversed)

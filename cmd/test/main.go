@@ -33,7 +33,7 @@ func main() {
 	
 	fmt.Println("Before: ", imgX.Pix[:16])
 	reversedX := process.ReverseImageBits(imgX)
-	if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix); err != nil {
+	if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix, widthX, heightX); err != nil {
 		panic(err)
 	}
 	fmt.Println("After: ", reversedX.Pix[:16])
