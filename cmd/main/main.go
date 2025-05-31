@@ -78,26 +78,6 @@ func main() {
 		panic(err)
 	}
 
-	outputX := "output/outputX.bmp"
-	outputY := "output/outputY.bmp"
-	outputXReversed := "output/outputXReversed.bmp"
-	outputYReversed := "output/outputYReversed.bmp"
-	if err := imageio.WriteGrayBMP(outputX, headerX, imgX.Pix, widthX, heightX); err != nil {
-		panic(err)
-	}
-	if err := imageio.WriteGrayBMP(outputY, headerX, imgY.Pix, widthX, heightX); err != nil {
-		panic(err)
-	}
-	reversedX := process.ReverseImageBits(imgX)
-	if err := imageio.WriteGrayBMP(outputXReversed, headerX, reversedX.Pix, widthX, heightX); err != nil {
-		panic(err)
-	}
-	fmt.Println("After: ", reversedX.Pix[:16])
-	reversedY := process.ReverseImageBits(imgY)
-	if err := imageio.WriteGrayBMP(outputYReversed, headerX, reversedY.Pix, widthX, heightX); err != nil {
-		panic(err)
-	}
-
 	fmt.Println("Saved combined image to", outputZ)
 	fmt.Println("Saved reversed image to", outputReversed)
 	fmt.Println("Saved double-reversed image to", outputDoubleReversed)
