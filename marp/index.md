@@ -361,3 +361,11 @@ func main() {
     <small>反轉後</small>
   </div>
 </div>
+
+---
+<!-- paginate: skip -->
+<br>
+<br>
+<br>
+<h1><center>Thank<center></h1>
+<h1><center>You<center></h1>
